@@ -7,7 +7,9 @@ import (
 	"expanses_rest_api/intenal/service"
 	"fmt"
 	"log"
+	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
 )
 
@@ -18,13 +20,17 @@ func main() {
 	if err := initConfig(); err != nil {
 		log.Fatalf("error initializing configs: %s", err.Error())
 	}
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("eror loading env variables: %s", err.Error())
+	}
+
 	db, err := repository.NewPostgresDB(repository.Config{
-		Host:     "localhost",
-		Port:     "5432",
-		UserName: "postgres",
-		Password: "12345678",
-		DBName:   "expense",
-		SSLMode:  "disable",
+		Host:     viper.GetString("db.host"),
+		Port:     viper.GetString("db.port"),
+		Username: viper.GetString("db.username"),
+		Password: os.Getenv("DB_PASSWORD"),
+		DBName:   viper.GetString("db.dbname"),
+		SSLMode:  viper.GetString("db.sslmode"),
 	})
 	if err != nil {
 		log.Fatalf("failed to initialize db: %s", err.Error())
@@ -34,6 +40,7 @@ func main() {
 	services := service.NewService(repos)
 	handler := handler.NewHandler(services)
 	srv := new(expanses_rest_api.Server)
+	fmt.Println(fmt.Sprintf("[info] Server running on port: %s", viper.GetString("port")))
 	if err := srv.Run(viper.GetString("port"), handler.InitRoutes()); err != nil {
 		log.Fatal(err)
 	}
