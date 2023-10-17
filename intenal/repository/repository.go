@@ -1,11 +1,16 @@
 package repository
 
-import "github.com/jmoiron/sqlx"
+import (
+	"expanses_rest_api/intenal/expense"
+
+	"github.com/jmoiron/sqlx"
+)
 
 type Authorization interface {
 }
 
 type Expense interface {
+	AddExpense(exp expense.Expense) error
 }
 type ExpenseList interface {
 }
@@ -17,5 +22,7 @@ type Repository struct {
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
-	return &Repository{}
+	return &Repository{
+		Expense: NewExp_Postgres(db),
+	}
 }
