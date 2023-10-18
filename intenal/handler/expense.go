@@ -22,8 +22,10 @@ func (h *Handler) add(c *gin.Context) {
 		logrus.Error(err)
 		return
 	}
-	logrus.Info(input)
-	c.JSON(http.StatusOK, input)
+	logrus.Info("Expense successfully added")
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "ok",
+	})
 }
 func (h *Handler) getall(c *gin.Context) {
 	fmt.Println("[info] test")
