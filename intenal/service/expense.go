@@ -16,3 +16,6 @@ func NewExpenseService(repo repository.Expense) *ExpenseService {
 func (s *ExpenseService) AddExpense(exp expense.Expense) error {
 	return s.repo.AddExpense(exp)
 }
+func (s *ExpenseService) UpdateExpense(exp expense.Expense) error {
+	return s.repo.UpdateExpense(exp)
+}

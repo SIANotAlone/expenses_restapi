@@ -10,6 +10,7 @@ type Authorization interface {
 
 type Expense interface {
 	AddExpense(exp expense.Expense) error
+	UpdateExpense(exp expense.Expense) error
 }
 type ExpenseList interface {
 }

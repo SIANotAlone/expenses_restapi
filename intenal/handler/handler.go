@@ -24,6 +24,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	expense := router.Group("/expenses")
 	{
 		expense.POST("/add", h.add)
+		expense.PUT("/update", h.update)
 		expense.GET("/getall", h.getall)
 	}
 

@@ -1,6 +1,7 @@
 package expense
 
 type Expense struct {
+	Id          int64   `json:"id", omitempty`
 	Type        int64   `json:"type"` //expense or income
 	Value       float64 `json:"value"`
 	Date        float64 `json:"date"`
