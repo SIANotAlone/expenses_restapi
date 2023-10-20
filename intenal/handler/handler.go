@@ -26,6 +26,9 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		expense.POST("/add", h.add)
 		expense.PUT("/update", h.update)
 		expense.GET("/getall", h.getall)
+		expense.GET("/get/:id", h.get)
+		expense.GET("/getlast", h.getlast)
+
 	}
 
 	return router
